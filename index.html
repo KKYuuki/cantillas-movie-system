@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cinema Vault</title>
+    <style>
+        :root {
+            --bg: #111827;
+            --bg-soft: #1f2937;
+            --card: rgba(17, 24, 39, 0.85);
+            --panel: rgba(31, 41, 55, 0.9);
+            --primary: #f59e0b;
+            --primary-dark: #d97706;
+            --accent: #ef4444;
+            --text: #f9fafb;
+            --muted: #cbd5e1;
+            --border: rgba(255, 255, 255, 0.12);
+            --success: #22c55e;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background:
+                linear-gradient(rgba(17, 24, 39, 0.75), rgba(17, 24, 39, 0.9)),
+                url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?auto=format&fit=crop&w=1600&q=80') center/cover fixed no-repeat;
+            color: var(--text);
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 24px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.95), rgba(239, 68, 68, 0.9));
+            color: white;
+            padding: 30px 28px;
+            border-radius: 18px;
+            box-shadow: 0 18px 30px rgba(0, 0, 0, 0.25);
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.2rem;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            opacity: 0.95;
+            font-size: 1rem;
+        }
+
+        .card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 24px;
+            margin-bottom: 24px;
+            backdrop-filter: blur(8px);
+        }
+
+        .form-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: end;
+        }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 180px;
+            flex: 1;
+        }
+
+        .input-group label {
+            color: var(--muted);
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        input {
+            padding: 12px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.08);
+            color: var(--text);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        input::placeholder {
+            color: rgba(203, 213, 225, 0.8);
+        }
+
+        input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.2);
+        }
+
+        button {
+            padding: 12px 18px;
+            border: none;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s ease;
+        }
+
+        .primary-btn {
+            background: var(--primary);
+            color: #1f2937;
+        }
+
+        .primary-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        .secondary-btn {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
+            border: 1px solid var(--border);
+        }
+
+        .secondary-btn:hover {
+            background: rgba(255,255,255,0.18);
+        }
+
+        .danger-btn {
+            background: rgba(239, 68, 68, 0.12);
+            color: #fecaca;
+            border: 1px solid rgba(239, 68, 68, 0.3);
+        }
+
+        .danger-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+        }
+
+        .table-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .table-header h2 {
+            margin: 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 14px 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        thead {
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        th {
+            color: #fcd34d;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+
+        tbody tr:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        .actions {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #bbf7d0;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 700px) {
+            .container {
+                padding: 16px;
+            }
+
+            .header h1 {
+                font-size: 1.6rem;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Cinema Vault</h1>
+            <p>Track your favorite movies, genres, and years all in one place.</p>
+        </div>
+
+        <div class="card">
+            <h2 id="formTitle">Add Movie</h2>
+            <div class="form-row">
+                <div class="input-group">
+                    <label for="title">Movie Title</label>
+                    <input type="text" id="title" placeholder="Enter movie title">
+                </div>
+
+                <div class="input-group">
+                    <label for="genre">Genre</label>
+                    <input type="text" id="genre" placeholder="Action, Drama, Sci-Fi...">
+                </div>
+
+                <div class="input-group">
+                    <label for="releaseYear">Release Year</label>
+                    <input type="number" id="releaseYear" placeholder="2024">
+                </div>
+
+                <button id="saveButton" class="primary-btn" onclick="saveMovie()">Save Movie</button>
+                <button id="cancelButton" class="secondary-btn" onclick="resetForm()" style="display:none;">Cancel</button>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="table-header">
+                <h2>Movie Collection</h2>
+                <button class="secondary-btn" onclick="loadMovies()">Refresh</button>
+            </div>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Title</th>
+                        <th>Genre</th>
+                        <th>Release Year</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="movieTable"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        let editingMovieId = null;
+
+        async function loadMovies() {
+            const response = await fetch("/api/movies");
+            const movies = await response.json();
+            const table = document.getElementById("movieTable");
+
+            table.innerHTML = "";
+
+            if (!movies.length) {
+                table.innerHTML = `
+                    <tr>
+                        <td colspan="5" style="text-align:center; color:#cbd5e1; padding:24px;">
+                            No movies found in the vault.
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            movies.forEach(movie => {
+                const row = `
+                    <tr>
+                        <td><span class="badge">#${movie.id}</span></td>
+                        <td>${movie.title}</td>
+                        <td>${movie.genre}</td>
+                        <td>${movie.release_year}</td>
+                        <td>
+                            <div class="actions">
+                                <button class="secondary-btn" onclick="editMovie(${movie.id}, '${movie.title.replace(/'/g, "\\'")}', '${movie.genre.replace(/'/g, "\\'")}', ${movie.release_year})">Edit</button>
+                                <button class="danger-btn" onclick="deleteMovie(${movie.id})">Delete</button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+
+                table.innerHTML += row;
+            });
+        }
+
+        function resetForm() {
+            editingMovieId = null;
+            document.getElementById("title").value = "";
+            document.getElementById("genre").value = "";
+            document.getElementById("releaseYear").value = "";
+            document.getElementById("formTitle").textContent = "Add Movie";
+            document.getElementById("saveButton").textContent = "Save Movie";
+            document.getElementById("cancelButton").style.display = "none";
+        }
+
+        function editMovie(id, title, genre, releaseYear) {
+            editingMovieId = id;
+            document.getElementById("title").value = title;
+            document.getElementById("genre").value = genre;
+            document.getElementById("releaseYear").value = releaseYear;
+            document.getElementById("formTitle").textContent = "Edit Movie";
+            document.getElementById("saveButton").textContent = "Update Movie";
+            document.getElementById("cancelButton").style.display = "inline-block";
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        }
+
+        async function saveMovie() {
+            const movie = {
+                title: document.getElementById("title").value,
+                genre: document.getElementById("genre").value,
+                release_year: document.getElementById("releaseYear").value
+            };
+
+            if (!movie.title || !movie.genre || !movie.release_year) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const method = editingMovieId ? "PUT" : "POST";
+            const url = editingMovieId ? `/api/movies/${editingMovieId}` : "/api/movies";
+
+            const response = await fetch(url, {
+                method,
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(movie)
+            });
+
+            const result = await response.json();
+            alert(result.message);
+
+            resetForm();
+            loadMovies();
+        }
+
+        async function deleteMovie(id) {
+            const response = await fetch(`/api/movies/${id}`, {
+                method: "DELETE"
+            });
+
+            const result = await response.json();
+            alert(result.message);
+            loadMovies();
+        }
+
+        loadMovies();
+    </script>
+</body>
+
+</html>
